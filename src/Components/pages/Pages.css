@@ -1,0 +1,112 @@
+
+    
+  
+  .logo{
+    
+  
+  
+      font-size: 18px;
+  }
+  @media only screen and (max-width: 768px) {
+    .logo {
+      font-size: 15px;
+    }
+    .brand{
+      font-size:16px;
+    }
+    
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .logo {
+      font-size: 16px;
+    }
+    .brand{
+      font-size:16px;
+    }
+       
+  }
+  
+  @media only screen and (max-width: 768px) {
+       .brand{
+      font-size:16px;
+    }
+    
+  }
+  @media only screen and (max-width: 480px) {
+    
+    .brand{
+      font-size:16px;
+    }
+    
+  }
+  
+  
+  .text-over{
+    margin-top:-350px;
+      width:500px;  
+  
+    font-weight: bolder;
+    
+  }
+  @media only screen and (max-width:800px) {
+    .header{
+      margin-top:-40px;
+    }
+    .text-over{
+     display:none;
+    }
+    .logo{
+      margin-left:0px;
+    }
+  }
+  
+  @media only screen and (max-width: 480px) {
+    .header{
+      margin-top:-40px;
+    }
+    .text-over{
+     
+      display:none;
+    }
+    
+  }
+  .hind-light {
+    font-family: "Hind", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .hind-regular {
+    font-family: "Hind", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .hind-medium {
+    font-family: "Hind", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .hind-semibold {
+    font-family: "Hind", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .hind-bold {
+    font-family: "Hind", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  .header{
+    height:800px;
+  }
+  .nav-menu{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+  .banner{
+    
+    
+  }
