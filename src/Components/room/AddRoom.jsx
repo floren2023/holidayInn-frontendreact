@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../../App.css";
 import { addRoom, getRoomTypes } from "../utils/ApiFunctions";
 import {useForm} from'react-hook-form'
@@ -7,30 +7,36 @@ import {yupResolver} from '@hookform/resolvers/yup'
 import ExistingRooms from './ExistingRooms'
 
 const AddRoom = () => {
+  const [roomType, setRoomType] = useState([]);  
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage]=useState('')
+
+  useEffect(() => {
+    fetchTypesRoom();
+  }, []);
+  const fetchTypesRoom = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getRoomTypes();
+      setRoomType(result);
+  console.log(result)
+      setIsLoading(false);
+    } catch (error) {
+      setErrorMessage("not found room types");
+    }
+  };
   
- /*  const schema=yup.object().shape({
+   const schema=yup.object().shape({
     roomType:yup.string().required("Room Type is required"),
     price:yup.number().required("price is required"),
     photo:yup.string().required("Photo is required"),
-}) */
+}) 
 const {register,handleSubmit,formState:{errors}}=useForm()
   
 
  // const [selectedRoom, setSelectedRoom] = useState("Single");
-  const [roomType, setRoomType] = useState([
-    {
-      id: 1,
-      roomTypeName: "Single",
-    },
-    {
-      id: 2,
-      roomTypeName: "Double",
-    },
-    {
-      id: 3,
-      roomTypeName: "Suite",
-    },
-  ]);
+        
+  
   const [newRoomType, setNewRoomType] = useState("");
 
  /*  const [showText, setShowText] = useState(false);
@@ -61,22 +67,9 @@ const {register,handleSubmit,formState:{errors}}=useForm()
     roomPrice: "",
   });
 
- const [imagePreview, setImagePreview] = useState("");
- /*   const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const handleRoomInputChange = (e) => {
-    const name = e.target.name;
-    let value = e.target.value;
-    if (name === "roomPrice") {
-      if (value != undefined) {
-        parseInt(value);
-      } else {
-        value = "";
-      }
-    }
-    setNewRoom({ ...newRoom, [name]: value });
-  }; */
+ const [imagePreview, setImagePreview] = useState("");     
+    
+    
   const handleImageChange = (e) => {
     let selectedImage = e.target.files[0];
  
@@ -94,56 +87,69 @@ console.log(newRoom)
   
   return (
     
-    <section className="container mt-5 mb-5 container-md mx-auto add-room col-md-8 col-lg-6">
-      <div className="row justify-content-center">
-        <div className="">
-          <h2 className="mt-5 mb-2">Add a new room</h2>
+    <section className="debajo mt-10 w-full max-w-3xl mx-auto overflow-hidden
+       bg-neutral-100 rounded-md shadow-md dark:bg-gray-800 p-7">
+        <div className="text-center justify-center mx-auto text-teal-700 font-semibold
+            text-2xl mb-10 mt-5">
+            Holiday<span className="text-2xl text-amber-500">S</span> Inn</div>
+
+                    <h2 className="mt-5 mb-5 ml-20 text-2xl font-semibold">Add a new room</h2>
+       
+
 
           <form onSubmit={onSubmit}>
-            <div className="mb-3">
-              <label htmlFor="roomType" className="formLabel">
-                Room Type
-              </label>
-              <div className="addTask">
-                <div>
-                  <input onChange={handleChangeType} />
-                  <button onClick={addRoomType}>Add Room Type</button>
-                </div>
-                <div className="list">
-                  <select  {...register("roomType",{required:true})} >
+            <div className="">       
+              
+                <div className="flex flex-row gap-3 w-full p-3">
+                 
+                  <input onChange={handleChangeType} className=" w-1/3 px-4 py-2  text-gray-700
+                   placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800
+                    dark:border-gray-600 dark:placeholder-gray-400 focus:border-cyan-400 dark:focus:border-cyan-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-cyan-300"/>
+                  <button onClick={addRoomType} className="text-teal-700 bg-amber-300 hover:bg-amber-400
+                   rounded-md p-3">Add New Room Type</button>
+                   
+                  
+                  <select  {...register("roomType",{required:true})} className="text-gray-800 bg-neutral-300 w-1/3 pl-3" 
+                  onChange={e=>setRoomType(e.target.value)}
+                   defaultValue='Single'>
+                    <option selected="false">Choose a type room</option>
                     {roomType.map((type, id) => {
+
                       return (
-                        <option key={type.id} value={type.roomTypeName}>
-                          {type.roomTypeName}
+                        <option key={type.id} value={type.typeRoom}>
+                          {type.typeRoom}
                         </option>
                       );
                     })}
                   </select>
-                  {errors.roomType&&<p>{errors.roomType?.message}</p>}
+                  
                 </div>
-              </div>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="price" className="formLabel">
+                </div>
+              
+              
+    
+            <div className="flex flex-row gap-6 p-5">
+            <div className="">
+              <label htmlFor="price" className="">
                 Room Price
               </label>
               <div>
                 <input
-                  className="form-control"
+                  className="block  px-4 py-2  text-gray-700 placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-cyan-400 dark:focus:border-cyan-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-cyan-300"
                  type="number"                
                  {...register("price",{required:true})}
                 />
                 {errors.price&&<p>{errors.price?.message}</p>}
               </div>
             </div>
-            <div className="mb-3">
-              <label htmlFor="photo" className="formLabel">
+            <div className=" ml-10">
+              <label htmlFor="photo" className="mb-2">
                 Room Photo
               </label>
               <div>
                 <input
                   type="file"
-                  className="form-control"
+                  className=""
                   
                  {...register("photo",{required:true})}
                  onChange={handleImageChange}
@@ -153,20 +159,21 @@ console.log(newRoom)
                   <img
                     src={imagePreview}
                     alt="Preview Room Photo"
-                    style={{ maxWidth: "400px", maxHeight: "400px" }}
+                    style={{ maxWidth: "200px", maxHeight: "200px" }}
                     className="mb-3"
                   />
                 )} 
               </div>
             </div>
-            <div className="d-grid d-md-flex mt-2">
-              <button type="submit" className="btn btn-hotel ml-5">
+            </div>
+            <div className="ml-20 mt-20">
+              <button type="submit" className="text-white bg-cyan-500 hover:bg-cyan-600 ml-5 p-3 rounded-md font-medium">
                 Save Room
               </button>
             </div>
           </form>
-        </div>
-      </div>
+      
+      
     </section>
    
     

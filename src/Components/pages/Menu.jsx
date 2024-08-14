@@ -14,19 +14,21 @@ export function Menu() {
         </div>
         <div>
          
-        <ul className="text-cyan-700 text-md traking-wide  flex-row gap-5 font-medium hidden lg:flex md:flex">
-          <li ><Link to="/" className="hover:text-cyan-600 font-semibold">HOME</Link> </li>
-          <li   ><Link to="/room" className="hover:text-cyan-600 font-semibold">SERVICES</Link></li>
-          <li><Link to="/about" className="hover:text-cyan-600 font-semibold"> ABOUT</Link></li>
-          <li><Link to="/contact" className="hover:text-cyan-600 font-semibold"> CONTACT</Link></li>
+        <ul className="text-cyan-700 font-menu text-md traking-wide  flex-row gap-5 font-medium hidden lg:flex md:flex">
+          <li ><Link to="/" className="hover:text-amber-400 font-semibold">HOME</Link> </li>
+          <li   ><Link to="/room" className="hover:text-amber-400 font-semibold">SERVICES</Link></li>
+          <li><Link to="/about" className="hover:text-amber-400 font-semibold"> ABOUT</Link></li>
+          <li><Link to="/contact" className="hover:text-amber-400 font-semibold"> CONTACT</Link></li>
+          <li><Link to="/addRoom" className="hover:text-amber-400 font-semibold"> ADD ROOM</Link></li>
+
 
         </ul>
         </div>
         <div className="flex flex-row gap-5">
-        <button className="bg-cyan-500 pl-5 pr-5 
-         text-white text-md p-2 rounded-md hover:text-white hover:bg-teal-600">Login</button>
-        <button className="bg-cyan-500 pl-5 pr-5 
-         text-white text-md p-2 rounded-md hover:text-white hover:bg-teal-600">Signup</button>
+        <Link to="/login" className="bg-cyan-500 pl-5 pr-5 font-semibold
+         text-white text-md p-2 rounded-md hover:text-white hover:bg-cyan-600">Login</Link>
+        <Link to="/signup" className="bg-cyan-500 pl-5 pr-5 font-semibold
+         text-white text-md p-2 rounded-md hover:text-white hover:bg-cyan-600">Signin</Link>
         </div>
        
       

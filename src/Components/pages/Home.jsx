@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import dayjs from "dayjs";
 import Footer from "../common/Footer";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -10,22 +10,62 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Switch from "@mui/material/Switch";
-import { amber } from '@mui/material/colors';
+import { amber } from "@mui/material/colors";
 import { set } from "date-fns";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { InsertInvitationOutlined } from "@mui/icons-material";
+import { TextField } from "@mui/material";
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
 function Home() {
-
-  const [valueDateIn, setValueDateIn] = useState(Date.now());
+   
   var date = new Date();
+  date.setDate(date.getDate() + 1)
+  const [value, setValue] = React.useState([
+    dayjs(Date.now()),
+    dayjs(date),
+  ]);
   
+  const {
+    register,
+    handleSubmit,
+    reset
+  } = useForm()
+    
+  const [search,setSearch]=useState([
+    { adults: 1, childrenNo: 0, rooms: 1, mascota:false,roomType:'Single',dataIn:Date.now(),
+      dataOut:date.setDate(date.getDate() + 1) }]
+  )
+  
+  
+  const schema = yup.object().shape({
+    dataIn: yup.date().required("Data checkin required"),
+    dataOut: yup.date().required("Data checkout required"),
+    // adults:yup.number().positive().integer().max(100).required("No of adults>0"),
+    // rooms:yup.string().min(1).max(100).required("No of rooms >0"),
+    roomType: yup.string().required("Room type required"),
+  });
 
-  const [valueDateOut, setValueDateOut] = useState(date.setDate(date.getDate() + 1))
-  const [adults, setAdults] = useState(1)
-  const [childrenNo, setChildrenNo] = useState(0)
-  const [room, setRoom] = useState(1)
-  const [roomType, setRoomType] = useState('Single')
+ 
+
+  const onSubmit = (data) => {
 
 
+    data={
+      ...data,dataIn:value[0],dataOut:value[1]
+    }
+    setSearch({data})
+    console.log(search);
+setSearch([
+      { adults: 1, childrenNo: 0, rooms: 1, mascota:false,roomType:'Single',dataIn:Date.now(),
+        dataOut:date.setDate(date.getDate() + 1) }])
+    
+    //addBooking()
+  };
+  
+  const onErrors = (errors) => console.error(errors);
 
   return (
     <div>
@@ -33,7 +73,7 @@ function Home() {
         <div className=" bg-cyan-200  ">
           <div>
             <ReactPlayer
-              url="http://localhost:3001/images/video1.mp4"
+              url="http://localhost:3000/images/video1.mp4"
               playing
               loop
               width="500"
@@ -42,7 +82,7 @@ function Home() {
             />
             <p
               className="text-over  leading-loose uppercase mx-auto items-center  text-4xl
-            shadow-md shadow-teal-800 text-white justify-center"
+             text-white justify-center"
             >
               {" "}
               dream holidays with us
@@ -55,110 +95,137 @@ function Home() {
           </div>
 
           <nav className="navbar    z-40 items-center align-baseline justify-center">
-            <div className="bg-cyan-300 border-2 border-amber-200 text-teal-700 items-center justify-center mx-auto p-4">
-              <div className="dropdown dropdown-hover z-40">
-                <div tabIndex={0} role="button" className="btn m-1 hover:bg-amber-100">
-                  Choose a room
-                </div>
+            <form onSubmit={handleSubmit(onSubmit, onErrors)}>
+              <div className="bg-cyan-300 border-2 border-amber-200 text-teal-700 items-center
+               justify-center mx-auto p-4 flex flex-row">
+                <div className="dropdown dropdown-hover z-40">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn m-1 hover:bg-amber-100"
+                  >
+                    Choose a room
+                  </div>
 
-                <div
-                  tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-300 p-4 shadow-md"
-                >
-                  <div className="flex flex-row pl-10 pr-10">
-                    <div className="p-3 flex flex-col gap-2 ">
-                      <div className="flex flex-col ">
-                        Adults
-                        <ButtonGroup
-                          variant="outlined"
-                          aria-label="Basic button group"
-                          sx={{ color: "#06b6d4" }}
-                        >
-                          <Button>
-                            <RemoveCircleIcon className="text-cyan-400"  onClick={setAdults(adults-1)}/>
-                          </Button>
-                          <Button>{adults}</Button>
-                          <Button>
-                            <AddCircleIcon className="text-cyan-400" onClick={setAdults(adults+1)}/>
-                          </Button>
-                        </ButtonGroup>
-                      </div>
-                      <div className="flex flex-col ">
-                        Children
-                        <ButtonGroup
-                          variant="outlined"
-                          aria-label="Basic button group"
-                          sx={{ color: "#06b6d4" }}
-                        >
-                          <Button>
-                            <RemoveCircleIcon className="text-cyan-400" onClick={setChildrenNo(childrenNo-1)}/>
-                          </Button>
-                          <Button>{childrenNo}</Button>
-                          <Button>
-                            <AddCircleIcon className="text-cyan-400" onClick={setChildrenNo(childrenNo-1)}/>
-                          </Button>
-                        </ButtonGroup>
-                      </div>
-                      <div className="flex flex-col ">
-                        Rooms
-                        <ButtonGroup
-                          variant="outlined"
-                          aria-label="Basic button group"
-                          sx={{ color: "#06b6d4" }}
-                        >
-                          <Button>
-                            <RemoveCircleIcon className="text-cyan-400"  />
-                          </Button>
-                          <Button></Button>
-                          <Button>
-                            <AddCircleIcon className="text-cyan-400" />
-                          </Button>
-                        </ButtonGroup>
-                      </div>
+                  <div
+                    tabIndex={0}
+                    className="dropdown-content menu bg-base-100 rounded-box z-1  p-4 shadow-md"
+                  >
+                    <div className="flex flex-row pl-2 pr-2">
+                      <div className="p-3 flex flex-col gap-2 ">
+                        <div className="flex flex-col text-cyan-600">
+                          Adults
+                          <ButtonGroup
+                            variant="outlined"
+                            aria-label="Basic button group"
+                            sx={{ color: "#06b6d4" }}
+                          >
+                            <Button>
+                              <RemoveCircleIcon className="text-cyan-400" />
+                            </Button><p className="p-2">
+                            {search[0].adults}
+                            </p>
+                            <Button >
+                              <AddCircleIcon className="text-cyan-400" />
+                            </Button>
+                          </ButtonGroup>
+                        </div>
+                        <div className="flex flex-col ">
+                          Children
+                          <ButtonGroup
+                            variant="outlined"
+                            aria-label="Basic button group"
+                            sx={{ color: "#06b6d4" }}
+                          >
+                            <Button>
+                              <RemoveCircleIcon className="text-cyan-400" />
+                            </Button><p className="p-2">
+                            {search[0].childrenNo}
+                            </p>
 
-                      <div>
-                        Mascota
-                        <Switch />
+
+                            <Button>
+                              <AddCircleIcon className="text-cyan-400" />
+                            </Button>
+                          </ButtonGroup>
+                        </div>
+                        <div className="  flex flex-col ">
+                          Rooms
+                          <ButtonGroup
+                            variant="outlined"
+                            aria-label="Basic button group"
+                            sx={{ color: "#06b6d4" }}
+                          >
+                            <Button>
+                              <RemoveCircleIcon className="text-cyan-400" />
+                            </Button><p className="p-2">
+
+                            {search[0].rooms}</p>
+                            <Button>
+                              <AddCircleIcon className="text-cyan-400" />
+                            </Button>
+                          </ButtonGroup>
+                        </div>
+
                       </div>
-                    </div>
-                    <div className="p-4">
-                      <p className="font-medium text-teal-700 text-center items-center bg-cyan-300 rounded-md p-4">Type</p>
-                      <ul>
-                        <li>
-                          <a>Single</a>{" "}
-                        </li>
-                        <li>
-                          <a>Double</a>
-                        </li>
-                        <li>
-                          <a>Apartment</a>
-                        </li>
-                        <li>
-                          <a>Suite</a>
-                        </li>
-                      </ul>
-                    </div>
+                      <div className="p-4">
+                        <select label="Room Type"
+                          className="select select-warning w-150  max-w-xs font-medium
+                       text-teal-700 text-center items-center bg-cyan-300 rounded-md p-2 mt-6"
+                          name="roomType"
+                          {...register("roomType")}                      >
+                          
+                          <option>Single</option>
+                          <option>Double</option>
+                          <option>Apartament</option>
+                          <option>Suite</option>
+                        </select>                        
+                        <div className="pt-10">
+                          Mascota
+                          <Switch name="mascota" {...register("mascota")} />
+                        </div>
+                      </div>
                     </div>
                     <div className="text-end justify-end flex-end items-end ml-3 ">
-                      <Button sx={{color:amber[500],font:'medium',hover:{color:amber[700]}}} variant="text" >OK</Button>
+                      <Button
+                        sx={{
+                          color: amber[500],
+                          font: "medium",
+                          hover: { color: amber[700] },
+                        }}
+                        variant="text"
+                      >
+                        OK
+                      </Button>
                     </div>
-                  
+                  </div>
+                
                 </div>
-                {/* <input 
-              type="tex/* t"
-              placeholder="Search"
-              className="input input-bordered w-24 md:w-auto"
-            /> */}
+
+                <div>
+          <DateRangePicker
+            value={value}
+            onChange={(newValue) => setValue(newValue)}
+          /></div>
+             
+                
+                {/* <input  type="date" name="dataIn" value={valueIn} onChange={e=>setValueIn(e.target.value)} {...register("dataIn")}/> */}
+                {/* <input  type="date" name="dataOut" value={valueOut} onChange={e=>setValueOut(e.target.value)} {...register("dataOut")}/> */}
+                <div className="text-end justify-end flex-end items-end ml-3 ">
+                  <Button
+                    sx={{
+                      background: amber[200],
+                      color: "#0d9488",
+                      font: "bold",
+                      hover: { background: amber[600], color: "#fff" },
+                    }}
+                    type="submit"
+                  >
+                    SEARCH
+                  </Button>
+                </div>
               </div>
-
-              <DatePicker label="DATA IN" defaultValue={dayjs(Date.now())} />
-
-              <DatePicker label="DATA OUT" defaultValue={dayjs(valueDateOut)} />
-              <div className="text-end justify-end flex-end items-end ml-3 ">
-                      <Button sx={{background:amber[200],color:'#0d9488',font:'bold',hover:{background:amber[600],color:'#fff'}}} >SEARCH</Button>
-                    </div>
-            </div>
-            
+            </form>
           </nav>
         </div>
       </div>

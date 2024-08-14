@@ -172,21 +172,8 @@ h2 {
   margin-top: auto;
 }
 
-.add-room {
-  background: rgb(246, 242, 246);
-  background: linear-gradient(
-    0deg,
-    rgba(246, 242, 246, 0.15849667503720233) 0%,
-    #bbabe9 100%
-  );
-  margin-top: 10px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-  padding: 20px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
+
+
 
 .addTask {
   align-items: center;

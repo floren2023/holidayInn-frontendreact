@@ -24,34 +24,62 @@ const Signup = () => {
 
 
   return (
-    <div className="signup">
-        <h3 style={{color:"white"}}>Sigup form</h3>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="formcontrol">
-          <input type="text" placeholder="Full name"  style={{width:300}} {...register("fullName")}/>
-          <p>{errors.fullName?.message}</p>
+  
+        
+        <section className="debajo mt-20 max-w-4xl p-6 mx-auto bg-neutral-100 rounded-md shadow-md
+         dark:bg-gray-800">
+           <div className="text-center justify-center mx-auto text-teal-700 font-semibold
+            text-2xl mb-10 uppercase">
+            Holiday<span className="text-2xl text-amber-500">S</span> Inn
+
+</div>
+        <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white ml-20 mb-10">Signup Form</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>   
+        <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+            <div>
+                <label className="text-gray-700 dark:text-gray-200" htmlFor="username">Full name</label>
+                <input id="username" type="text" className="block w-full px-4 py-2 mt-2 text-gray-700
+                 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300
+                  dark:border-gray-600 focus:border-cyan-400 focus:ring-cyan-300 focus:ring-opacity-40
+                   dark:focus:border-cyan-300 focus:outline-none focus:ring" {...register("fullName")}/>
+                     <p>{errors.fullName?.message}</p>
+            </div>
+
+            <div>
+                <label className="text-gray-700 dark:text-gray-200" for="emailAddress">Email Address</label>
+                <input id="emailAddress" type="email" className="block w-full px-4 py-2 mt-2 text-gray-700
+                 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300
+                  dark:border-gray-600 focus:border-cyan-400 focus:ring-cyan-300 focus:ring-opacity-40
+                   dark:focus:border-cyan-300 focus:outline-none focus:ring" {...register("email")}/>
+                     <p>{errors.email?.message}</p>
+            </div>
+
+            <div>
+                <label className="text-gray-700 dark:text-gray-200" for="password">Password</label>
+                <input id="password" type="password" className="block w-full px-4 py-2 mt-2 text-gray-700
+                 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300
+                  dark:border-gray-600 focus:border-cyan-400 focus:ring-cyan-300 focus:ring-opacity-40
+                   dark:focus:border-cyan-300 focus:outline-none focus:ring" {...register("password")}/>
+                     <p>{errors.password?.message}</p>
+            </div>
+
+            <div>
+                <label className="text-gray-700 dark:text-gray-200" for="passwordConfirmation">Password Confirmation</label>
+                <input id="passwordConfirmation" type="password" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border
+                 border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300
+                  dark:border-gray-600 focus:border-cyan-400 focus:ring-cyan-300
+                   focus:ring-opacity-40 dark:focus:border-cyan-300 focus:outline-none focus:ring" {...register("confirmPassword")} />
+                  <p>{errors.confirmPassword?.message}</p>
+            </div>
         </div>
-        <div className="formcontrol">
-          <input type="text" placeholder="Email" style={{width:300}} {...register("email")} />
-          <p>{errors.email?.message}</p>
+
+        <div className="flex justify-end mt-6">
+            <button className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform
+             bg-cyan-600 rounded-md hover:bg-cyan-700 focus:outline-none focus:bg-cyan-700">Save</button>
         </div>
-        <div className="formcontrol">
-          <input type="number" placeholder="Age" style={{width:300}} {...register("age")}/>
-          <p>{errors.age?.message}</p>
-        </div>
-        <div className="formcontrol">
-          <input type="password" placeholder="Password" style={{width:300}} {...register("password")}/>
-          <p>{errors.password?.message}</p>
-        </div>
-        <div className="formcontrol">
-          <input type="password" placeholder="Confirm password"  style={{width:300}} {...register("confirmPassword")}/>
-          <p>{errors.confirmPassword?.message}</p>
-        </div>
-        <div className="formcontrol">
-        <input type="submit" style={{color:"green",FontWeight:500,width:302,backgroundColor:"#fff",height:50}} value="Submit"/>
-        </div>
-      </form>
-    </div>
+    </form>
+</section>       
+    
   );
 };
 
