@@ -4,7 +4,7 @@ import { getAllRooms } from "../utils/ApiFunctions";
 import "../../App.css";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-const ExistingRooms = () => {
+const ExistingRooms = ({checkin,checkout}) => {
   const [rooms, setRooms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [roomsPerPage] = useState(8);
@@ -16,6 +16,11 @@ const ExistingRooms = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
+    if(checkin && checkout)
+    {
+      searchRooms();
+    }
+    else
     fetchRooms();
   }, []);
   const fetchRooms = async () => {
@@ -98,24 +103,24 @@ const ExistingRooms = () => {
                           ${room.roomPrice}
                         </div>
                       
-                        <div className="text-green-400 text-xl pl-10 ml-20 mb-5">
+                        <div className="text-teal-600 text-sm pl-10 ml-20 mb-5 italic">
                           21% less than last month
                         </div>
                         
                       </div>
                       <div></div>
                     </div>
-                    <div className="text-gray-500 text-xl ">
+                    <div className="text-gray-500 text-sm ">
                           {room.typeRoom}
                         </div>
                   </div>
                   <div className="flex flex-row justify-between pr-10 pl-10">
-                    <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg text-teal-700 hover:text-white hover:bg-cyan-600">
+                    <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md text-teal-700 hover:text-white hover:bg-cyan-600">
                       {" "}
                       View
                     </button>
 
-                    <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg bg-warning mb-5">
+                    <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-md bg-warning mb-5">
                       Book now
                     </button>
                   </div>

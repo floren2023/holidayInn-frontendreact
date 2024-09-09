@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from "axios";
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 export const api = axios.create({
   baseURL: "http://localhost:8080",
@@ -48,6 +50,34 @@ export async function getAllRooms(){
     
     
     return resultWithPhoto
+  }catch(error){
+    throw new Error("Error fetching rooms")
+  }
+}
+
+/* this function gets all rooms from database*/
+export async function getAllBookings(){
+  
+  try{
+    const result=await api.get("/rooms/all-bookings")
+    console.log(result.data)
+    
+    return result
+  }catch(error){
+    throw new Error("Error fetching rooms")
+  }
+}
+export async function searchRooms(checkin, checkout){
+ const checkinUrl=checkin.format('YYYY/MM/DD')
+  const checkoutUrl=checkout.format('YYYY/MM/DD')
+
+  const urlSearch=new URL(`http://localhost:8080/rooms/search-available?checkin=${checkinUrl}&checkout=${checkoutUrl}`)
+  console.log(urlSearch)
+  try{
+    const result=await api.get(urlSearch)
+    console.log(result.data)
+    
+    return result
   }catch(error){
     throw new Error("Error fetching rooms")
   }

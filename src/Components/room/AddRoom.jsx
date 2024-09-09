@@ -104,7 +104,9 @@ console.log(newRoom)
                  
                   <input onChange={handleChangeType} className=" w-1/3 px-4 py-2  text-gray-700
                    placeholder-gray-500 bg-white border rounded-lg dark:bg-gray-800
-                    dark:border-gray-600 dark:placeholder-gray-400 focus:border-cyan-400 dark:focus:border-cyan-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-cyan-300"/>
+                    dark:border-gray-600 dark:placeholder-gray-400 focus:border-cyan-400
+                     dark:focus:border-cyan-300 focus:ring-opacity-40 focus:outline-none focus:ring
+                      focus:ring-cyan-300"/>
                   <button onClick={addRoomType} className="text-teal-700 bg-amber-300 hover:bg-amber-400
                    rounded-md p-3">Add New Room Type</button>
                    
